@@ -25,7 +25,6 @@ class JobFilterExtension {
 
   private init(): void {
     this.loadSettings();
-    this.injectFloatingControls();
     this.startObserver();
     this.processJobs();
     this.setupMessageListener();
@@ -35,7 +34,6 @@ class JobFilterExtension {
     chrome.storage.local.get(['linkedinJobFilter'], (result: Record<string, unknown>) => {
       if (result.linkedinJobFilter) {
         this.settings = { ...this.settings, ...(result.linkedinJobFilter as ExtensionSettings) };
-        this.updateUI();
       }
     });
   }
@@ -71,8 +69,8 @@ class JobFilterExtension {
     const stateEl = footer?.querySelector(CONFIG.stateSelector);
     // Search more broadly for time element - could be anywhere in the job card
     const timeEl = jobCard.querySelector(CONFIG.timeSelector) ||
-                   footer?.querySelector(CONFIG.timeSelector) ||
-                   jobCard.querySelector('time');
+      footer?.querySelector(CONFIG.timeSelector) ||
+      jobCard.querySelector('time');
 
     let status: JobStatus = 'normal';
     let time: Date | null = null;
@@ -93,13 +91,13 @@ class JobFilterExtension {
 
   private processJobs(): void {
     const jobs = document.querySelectorAll(CONFIG.jobCardSelector);
-    
+
     // Clear processed set to allow re-processing when status changes
     this.processedJobs.clear();
-    
+
     jobs.forEach(job => {
       const { status } = this.getJobStatus(job);
-      
+
       // Always clear old styles first (in case status changed)
       job.classList.remove(
         'linkedin-job-filter-viewed',
@@ -172,7 +170,7 @@ class JobFilterExtension {
       console.log('[LinkedIn Job Filter] Restored original order for', sortedJobs.length, 'jobs');
       return;
     }
-    
+
     const sortedJobs = jobs.sort((a, b) => {
       const statusA = this.getJobStatus(a);
       const statusB = this.getJobStatus(b);
@@ -238,7 +236,7 @@ class JobFilterExtension {
   private startObserver(): void {
     this.observer = new MutationObserver((mutations) => {
       let shouldProcess = false;
-      
+
       mutations.forEach(mutation => {
         if (mutation.type === 'childList') {
           mutation.addedNodes.forEach(node => {
@@ -266,101 +264,8 @@ class JobFilterExtension {
     }
   }
 
-  private injectFloatingControls(): void {
-    const existing = document.getElementById('linkedin-job-filter-ui');
-    if (existing) existing.remove();
 
-    const toggleBtn = document.createElement('button');
-    toggleBtn.id = 'linkedin-job-filter-toggle';
-    toggleBtn.className = 'linkedin-job-filter-toggle';
-    toggleBtn.innerHTML = '⚙️';
-    toggleBtn.title = 'LinkedIn Job Filter';
-    document.body.appendChild(toggleBtn);
 
-    const panel = document.createElement('div');
-    panel.id = 'linkedin-job-filter-controls';
-    panel.className = 'linkedin-job-filter-controls';
-    panel.style.display = 'none';
-    panel.innerHTML = `
-      <h3>Job Filter</h3>
-      <div class="control-group">
-        <label>Sort By</label>
-        <select id="ljf-sort">
-          <option value="default">Default</option>
-          <option value="recent">Most Recent</option>
-          <option value="viewed-first">Viewed First</option>
-          <option value="viewed-last">Viewed Last</option>
-        </select>
-      </div>
-      <div class="control-group">
-        <label>Applied Jobs</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="ljf-applied-action" value="normal" id="ljf-applied-normal"> Normal
-          </label>
-          <label>
-            <input type="radio" name="ljf-applied-action" value="dim" id="ljf-applied-dim" checked> Dim
-          </label>
-          <label>
-            <input type="radio" name="ljf-applied-action" value="hide" id="ljf-applied-hide"> Hide
-          </label>
-        </div>
-      </div>
-      <div class="control-group">
-        <label>
-          <input type="checkbox" id="ljf-highlight-viewed" checked> Highlight Viewed
-        </label>
-      </div>
-    `;
-    document.body.appendChild(panel);
-
-    toggleBtn.addEventListener('click', () => {
-      const isVisible = panel.style.display !== 'none';
-      panel.style.display = isVisible ? 'none' : 'block';
-      toggleBtn.classList.toggle('active', !isVisible);
-    });
-
-    const sortSelect = panel.querySelector('#ljf-sort') as HTMLSelectElement;
-    sortSelect.addEventListener('change', (e) => {
-      this.settings.sortBy = (e.target as HTMLSelectElement).value as ExtensionSettings['sortBy'];
-      this.saveSettings();
-      this.sortJobs();
-    });
-
-    const appliedActionRadios = panel.querySelectorAll('input[name="ljf-applied-action"]') as NodeListOf<HTMLInputElement>;
-    appliedActionRadios.forEach((radio) => {
-      radio.addEventListener('change', (e) => {
-        const selectedValue = (e.target as HTMLInputElement).value;
-        this.settings.appliedAction = selectedValue as ExtensionSettings['appliedAction'];
-        this.saveSettings();
-        this.processJobs();
-      });
-    });
-
-    const highlightViewedCheckbox = panel.querySelector('#ljf-highlight-viewed') as HTMLInputElement;
-    highlightViewedCheckbox.addEventListener('change', (e) => {
-      this.settings.highlightViewed = (e.target as HTMLInputElement).checked;
-      this.saveSettings();
-      this.processJobs();
-    });
-  }
-
-  private updateUI(): void {
-    const panel = document.getElementById('linkedin-job-filter-controls');
-    if (!panel) return;
-
-    const sortSelect = panel.querySelector('#ljf-sort') as HTMLSelectElement;
-    const appliedActionRadios = panel.querySelectorAll('input[name="ljf-applied-action"]') as NodeListOf<HTMLInputElement>;
-    const highlightViewedCheckbox = panel.querySelector('#ljf-highlight-viewed') as HTMLInputElement;
-
-    if (sortSelect) sortSelect.value = this.settings.sortBy;
-    if (appliedActionRadios) {
-      appliedActionRadios.forEach((radio) => {
-        radio.checked = radio.value === this.settings.appliedAction;
-      });
-    }
-    if (highlightViewedCheckbox) highlightViewedCheckbox.checked = this.settings.highlightViewed;
-  }
 
   private setupMessageListener(): void {
     chrome.runtime.onMessage.addListener((request: MessageRequest, _sender, sendResponse: (response: MessageResponse) => void) => {
@@ -373,7 +278,7 @@ class JobFilterExtension {
         }
         sendResponse({ success: true });
       }
-      
+
       if (request.type === 'getStats') {
         const jobs = document.querySelectorAll(CONFIG.jobCardSelector);
         let viewed = 0;
@@ -387,7 +292,7 @@ class JobFilterExtension {
 
         sendResponse({ total: jobs.length, viewed, applied });
       }
-      
+
       return true;
     });
   }
