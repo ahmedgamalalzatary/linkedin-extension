@@ -44,6 +44,24 @@ class JobFilterExtension {
     chrome.storage.local.set({ linkedinJobFilter: this.settings });
   }
 
+  private parseRelativeTime(text: string): Date | null {
+    const match = text.trim().match(/(\d+)\s+(minute|hour|day|week)s?\s+ago/i);
+    if (!match) return null;
+
+    const value = parseInt(match[1]!, 10);
+    const unit = match[2]!.toLowerCase();
+
+    const now = new Date();
+    const msPerUnit: Record<string, number> = {
+      minute: 60 * 1000,
+      hour: 60 * 60 * 1000,
+      day: 24 * 60 * 60 * 1000,
+      week: 7 * 24 * 60 * 60 * 1000
+    };
+
+    return new Date(now.getTime() - (value * msPerUnit[unit]!));
+  }
+
   private getJobStatus(jobCard: Element): JobCardInfo {
     const footer = jobCard.querySelector(CONFIG.footerSelector);
 
@@ -63,10 +81,8 @@ class JobFilterExtension {
     }
 
     if (timeEl) {
-      const datetime = timeEl.getAttribute('datetime');
-      if (datetime) {
-        time = new Date(datetime);
-      }
+      const timeText = timeEl.textContent || '';
+      time = this.parseRelativeTime(timeText);
     }
 
     return { status, time };
@@ -117,6 +133,7 @@ class JobFilterExtension {
   private captureOriginalOrder(): void {
     const jobs = document.querySelectorAll(CONFIG.jobCardSelector);
     jobs.forEach((job, index) => {
+      // Always update the index for all jobs (handles lazy loading)
       this.originalOrder.set(job, index);
     });
   }
@@ -162,6 +179,7 @@ class JobFilterExtension {
           if (!statusA.time && !statusB.time) return 0;
           if (!statusA.time) return 1;
           if (!statusB.time) return -1;
+          // Return older first (so when we reverse, newest is on top)
           return statusA.time.getTime() - statusB.time.getTime();
 
         case 'viewed-first':
@@ -231,6 +249,7 @@ class JobFilterExtension {
       if (shouldProcess) {
         setTimeout(() => {
           this.processJobs();
+          // Re-sort if a non-default sort is active
           if (this.settings.sortBy !== 'default') {
             this.sortJobs();
           }
