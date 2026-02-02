@@ -1,135 +1,181 @@
 :root {
-  /* OKLCH Color System */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.1450 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.1450 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.1450 0 0);
-  --primary: oklch(0.2050 0 0);
-  --primary-foreground: oklch(0.9850 0 0);
-  --secondary: oklch(0.9700 0 0);
-  --secondary-foreground: oklch(0.2050 0 0);
-  --muted: oklch(0.9700 0 0);
-  --muted-foreground: oklch(0.5560 0 0);
-  --accent: oklch(0.9700 0 0);
-  --accent-foreground: oklch(0.2050 0 0);
-  --destructive: oklch(0.5770 0.2450 27.3250);
-  --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.9220 0 0);
-  --input: oklch(0.9220 0 0);
-  --ring: oklch(0.7080 0 0);
-  --radius: 0.625rem;
-  
+  /* Light Theme - Warm, inviting color palette */
+  --background: #faf9f5;
+  --foreground: #3d3929;
+  --card: #ffffff;
+  --card-foreground: #141413;
+  --popover: #ffffff;
+  --popover-foreground: #28261b;
+  --primary: #c96442;
+  --primary-foreground: #ffffff;
+  --secondary: #e9e6dc;
+  --secondary-foreground: #535146;
+  --muted: #f0eee6;
+  --muted-foreground: #83827d;
+  --accent: #e9e6dc;
+  --accent-foreground: #28261b;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e5e3d9;
+  --input: #b4b2a7;
+  --ring: #c96442;
+  --radius: 12px;
+
   /* Status Colors */
-  --success: oklch(0.5960 0.1700 151);
-  --warning: oklch(0.7200 0.1900 75);
-  --error: oklch(0.5770 0.2450 27.3250);
-  
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px -4px rgba(0, 0, 0, 0.12);
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 13px;
+  --font-size-lg: 14px;
+  --font-size-xl: 16px;
+  --font-size-2xl: 20px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
 }
 
 [data-theme="dark"] {
-  --background: oklch(0.1450 0 0);
-  --foreground: oklch(0.9850 0 0);
-  --card: oklch(0.2050 0 0);
-  --card-foreground: oklch(0.9850 0 0);
-  --popover: oklch(0.2690 0 0);
-  --popover-foreground: oklch(0.9850 0 0);
-  --primary: oklch(0.9220 0 0);
-  --primary-foreground: oklch(0.2050 0 0);
-  --secondary: oklch(0.2690 0 0);
-  --secondary-foreground: oklch(0.9850 0 0);
-  --muted: oklch(0.2690 0 0);
-  --muted-foreground: oklch(0.7080 0 0);
-  --accent: oklch(0.3710 0 0);
-  --accent-foreground: oklch(0.9850 0 0);
-  --destructive: oklch(0.7040 0.1910 22.2160);
-  --destructive-foreground: oklch(0.9850 0 0);
-  --border: oklch(0.2750 0 0);
-  --input: oklch(0.3250 0 0);
-  --ring: oklch(0.5560 0 0);
-  
-  --success: oklch(0.6960 0.1600 151);
-  --warning: oklch(0.8000 0.1700 75);
-  --error: oklch(0.7040 0.1910 22.2160);
+  --background: #1a1918;
+  --foreground: #e5e3dd;
+  --card: #262624;
+  --card-foreground: #faf9f5;
+  --popover: #30302e;
+  --popover-foreground: #e5e5e2;
+  --primary: #d97757;
+  --primary-foreground: #ffffff;
+  --secondary: #3e3e38;
+  --secondary-foreground: #c3c0b6;
+  --muted: #2a2a28;
+  --muted-foreground: #a8a5a0;
+  --accent: #1a1915;
+  --accent-foreground: #f5f4ee;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #3e3e38;
+  --input: #52514a;
+  --ring: #d97757;
+
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #f87171;
+  --info: #60a5fa;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px -4px rgba(0, 0, 0, 0.6);
 }
 
-* {
+/* Reset and Base Styles */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html {
+  font-size: var(--font-size-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
-  width: 320px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-sans);
   background: var(--background);
   color: var(--foreground);
+  width: 340px;
+  min-height: 100%;
   line-height: 1.5;
 }
 
 /* Container */
 .container {
-  padding: 16px;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
 }
 
 /* Header */
 .header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+  align-items: flex-start;
+  margin-bottom: var(--space-1);
+  padding-bottom: var(--space-3);
   border-bottom: 1px solid var(--border);
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
-h1 {
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.025em;
+.header h1 {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--foreground);
+  letter-spacing: -0.02em;
 }
 
-/* Theme Toggle */
 .theme-toggle {
-  width: 28px;
-  height: 28px;
-  border: 1px solid var(--border);
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: var(--secondary);
   border-radius: var(--radius);
-  background: var(--background);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
+  color: var(--secondary-foreground);
 }
 
 .theme-toggle:hover {
   background: var(--accent);
-  border-color: var(--ring);
+  transform: scale(1.05);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
 }
 
 /* State Indicator */
 .state-indicator {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 9999px;
-  font-size: 11px;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  background: var(--muted);
+  border-radius: 20px;
+  font-size: var(--font-size-xs);
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
+  transition: all 0.2s ease;
+}
+
+.state-indicator.active {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--success);
 }
 
 .state-indicator.inactive {
@@ -137,111 +183,107 @@ h1 {
   color: var(--muted-foreground);
 }
 
-.state-indicator.active {
-  background: var(--success);
-  color: white;
-}
-
-.state-indicator.pending {
-  background: var(--warning);
-  color: white;
-}
-
-.state-indicator.error {
-  background: var(--destructive);
-  color: var(--destructive-foreground);
-}
-
 .state-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: currentColor;
+  box-shadow: 0 0 0 2px currentColor;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
 }
 
-/* Card */
+.state-indicator.inactive .state-dot {
+  box-shadow: 0 0 0 2px rgba(131, 130, 125, 0.3);
+}
+
+/* Cards */
 .card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 12px;
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 
 .card-label {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
   color: var(--muted-foreground);
   text-transform: uppercase;
-  letter-spacing: 0.025em;
-  margin-bottom: 12px;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-3);
 }
 
-/* Select */
+/* Select Dropdown */
 select {
   width: 100%;
-  padding: 10px 12px;
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--foreground);
-  background: var(--background);
-  border: 1px solid var(--input);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
+  background: var(--background);
+  color: var(--foreground);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-sans);
   cursor: pointer;
-  outline: none;
-  transition: border-color 0.15s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-3) center;
+  padding-right: var(--space-8);
+  transition: all 0.2s ease;
+}
+
+select:hover {
+  border-color: var(--input);
+  background-color: var(--popover);
 }
 
 select:focus {
+  outline: none;
   border-color: var(--ring);
-  box-shadow: 0 0 0 1px var(--ring);
-}
-
-/* Fix select dropdown options visibility */
-select option {
-  background: var(--background);
-  color: var(--foreground);
-  padding: 8px;
+  box-shadow: 0 0 0 3px rgba(201, 100, 66, 0.15);
 }
 
 /* Radio Group */
 .radio-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .radio-option {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  gap: var(--space-3);
+  padding: var(--space-2);
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .radio-option:hover {
-  border-color: var(--ring);
-  background: var(--accent);
+  background: var(--muted);
 }
 
-.radio-option input[type="radio"]:checked ~ label {
-  font-weight: 500;
-}
-
-input[type="radio"] {
-  width: 16px;
-  height: 16px;
+.radio-option input[type="radio"] {
+  width: 18px;
+  height: 18px;
   accent-color: var(--primary);
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .radio-option label {
-  font-size: 14px;
-  color: var(--foreground);
+  font-size: var(--font-size-sm);
+  color: var(--card-foreground);
   cursor: pointer;
+  user-select: none;
   flex: 1;
 }
 
@@ -249,91 +291,168 @@ input[type="radio"] {
 .checkbox-wrapper {
   display: flex;
   align-items: center;
-  gap: 10px;
-  cursor: pointer;
+  gap: var(--space-3);
 }
 
-input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
+.checkbox-wrapper input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
   accent-color: var(--primary);
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .checkbox-wrapper label {
-  font-size: 14px;
-  color: var(--foreground);
+  font-size: var(--font-size-sm);
+  color: var(--card-foreground);
   cursor: pointer;
+  user-select: none;
   flex: 1;
 }
 
 /* Stats Card */
 .stats-card {
-  background: var(--primary);
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--muted) 100%);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 16px;
+  padding: var(--space-4);
+  margin-top: var(--space-1);
 }
 
 .stats-title {
-  font-size: 11px;
-  font-weight: 500;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--muted-foreground);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--primary-foreground);
-  opacity: 0.7;
-  margin-bottom: 12px;
+  margin-bottom: var(--space-3);
 }
 
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  gap: var(--space-3);
 }
 
 .stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  padding: 10px 8px;
-  background: var(--secondary);
+  padding: var(--space-3);
+  background: var(--card);
   border-radius: calc(var(--radius) - 2px);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.stat-item:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 
 .stat-value {
-  display: block;
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--primary-foreground);
-  line-height: 1;
-  margin-bottom: 4px;
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.2;
 }
 
 .stat-label {
-  font-size: 10px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
-  color: var(--secondary-foreground);
+  font-size: var(--font-size-xs);
+  color: var(--muted-foreground);
+  margin-top: var(--space-1);
 }
 
 /* Apply Button */
 .apply-btn {
   width: 100%;
-  padding: 12px 16px;
+  padding: var(--space-3) var(--space-4);
   background: var(--primary);
   color: var(--primary-foreground);
-  border: 1px solid var(--border);
+  border: none;
   border-radius: var(--radius);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  font-family: var(--font-sans);
   cursor: pointer;
-  transition: all 0.15s ease;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.apply-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
 }
 
 .apply-btn:hover {
-  background: var(--foreground);
-  color: var(--background);
+  background: #b55a3a;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.apply-btn:hover::before {
+  left: 100%;
 }
 
 .apply-btn:active {
-  transform: translateY(1px);
+  transform: translateY(0);
+  box-shadow: var(--shadow);
 }
+
+.apply-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 100, 66, 0.3);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--input);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card, .stats-card {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.card:nth-child(2) { animation-delay: 0.05s; }
+.card:nth-child(3) { animation-delay: 0.1s; }
+.stats-card { animation-delay: 0.15s; }
+.apply-btn { animation: fadeIn 0.3s ease-out 0.2s backwards; }
