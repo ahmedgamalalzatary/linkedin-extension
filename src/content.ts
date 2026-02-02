@@ -45,7 +45,9 @@ class JobFilterExtension {
   }
 
   private parseRelativeTime(text: string): Date | null {
-    const match = text.trim().match(/(\d+)\s+(minute|hour|day|week)s?\s+ago/i);
+    // Take only first line (handles multiline text like "11 hours ago\nWithin the past 24 hours")
+    const firstLine = text.split('\n')[0]?.trim() || '';
+    const match = firstLine.match(/(\d+)\s+(minute|hour|day|week)s?\s+ago/i);
     if (!match) return null;
 
     const value = parseInt(match[1]!, 10);
