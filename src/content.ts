@@ -177,9 +177,9 @@ class JobFilterExtension {
       switch (this.settings.sortBy) {
         case 'recent':
           if (!statusA.time && !statusB.time) return 0;
-          if (!statusA.time) return 1;
-          if (!statusB.time) return -1;
-          // Return older first (so when we reverse, newest is on top)
+          if (!statusA.time) return -1;  // Jobs WITHOUT time go FIRST in sort array
+          if (!statusB.time) return 1;   // Jobs WITH time go LAST in sort array
+          // Sort by older first (4h, 2h, 10min), then reverse to get (10min, 2h, 4h, no-time)
           return statusA.time.getTime() - statusB.time.getTime();
 
         case 'viewed-first':
