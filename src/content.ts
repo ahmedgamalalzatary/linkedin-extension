@@ -114,7 +114,12 @@ class JobFilterExtension {
   private sortJobs(): void {
     if (this.settings.sortBy === 'default') return;
 
-    const jobList = document.querySelector(CONFIG.jobListSelector);
+    // Find the job list container by looking at the parent of the first job
+    const firstJob = document.querySelector(CONFIG.jobCardSelector);
+    if (!firstJob) return;
+
+    // Get the parent element (should be the ul/ol that contains all jobs)
+    const jobList = firstJob.parentElement;
     if (!jobList) return;
 
     const jobs = Array.from(document.querySelectorAll(CONFIG.jobCardSelector));
@@ -145,9 +150,12 @@ class JobFilterExtension {
       }
     });
 
+    // Reorder by moving elements in the DOM
     sortedJobs.forEach(job => {
       jobList.appendChild(job);
     });
+
+    console.log('[LinkedIn Job Filter] Sorted', sortedJobs.length, 'jobs by', this.settings.sortBy);
   }
 
   private updateStats(): void {
