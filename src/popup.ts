@@ -169,6 +169,12 @@ function applySettings(): void {
       };
 
       chrome.tabs.sendMessage(activeTab.id, message, (response: MessageResponse) => {
+        if (chrome.runtime.lastError) {
+          console.error('LinkedIn Job Filter:', chrome.runtime.lastError.message);
+          setErrorState();
+          return;
+        }
+        
         if (response?.success) {
           savedSettings = { ...currentSettings };
           hasChanges = false;
@@ -206,6 +212,11 @@ function loadStats(): void {
       const message: MessageRequest = { type: 'getStats' };
 
       chrome.tabs.sendMessage(activeTab.id, message, (response: MessageResponse) => {
+        if (chrome.runtime.lastError) {
+          console.error('LinkedIn Job Filter:', chrome.runtime.lastError.message);
+          return;
+        }
+        
         if (response) {
           const totalEl = document.getElementById('total-count');
           const viewedEl = document.getElementById('viewed-count');

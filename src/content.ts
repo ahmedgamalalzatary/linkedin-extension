@@ -17,6 +17,7 @@ class JobFilterExtension {
 
   private processedJobs = new Set<Element>();
   private observer: MutationObserver | null = null;
+  private originalOrder = new Map<Element, number>();
 
   constructor() {
     this.init();
@@ -45,10 +46,12 @@ class JobFilterExtension {
 
   private getJobStatus(jobCard: Element): JobCardInfo {
     const footer = jobCard.querySelector(CONFIG.footerSelector);
-    if (!footer) return { status: 'normal', time: null };
 
-    const stateEl = footer.querySelector(CONFIG.stateSelector);
-    const timeEl = footer.querySelector(CONFIG.timeSelector);
+    const stateEl = footer?.querySelector(CONFIG.stateSelector);
+    // Search more broadly for time element - could be anywhere in the job card
+    const timeEl = jobCard.querySelector(CONFIG.timeSelector) ||
+                   footer?.querySelector(CONFIG.timeSelector) ||
+                   jobCard.querySelector('time');
 
     let status: JobStatus = 'normal';
     let time: Date | null = null;
@@ -111,9 +114,14 @@ class JobFilterExtension {
     this.updateStats();
   }
 
-  private sortJobs(): void {
-    if (this.settings.sortBy === 'default') return;
+  private captureOriginalOrder(): void {
+    const jobs = document.querySelectorAll(CONFIG.jobCardSelector);
+    jobs.forEach((job, index) => {
+      this.originalOrder.set(job, index);
+    });
+  }
 
+  private sortJobs(): void {
     // Find the job list container by looking at the parent of the first job
     const firstJob = document.querySelector(CONFIG.jobCardSelector);
     if (!firstJob) return;
@@ -123,6 +131,27 @@ class JobFilterExtension {
     if (!jobList) return;
 
     const jobs = Array.from(document.querySelectorAll(CONFIG.jobCardSelector));
+
+    // Capture original order on first sort
+    if (this.originalOrder.size === 0) {
+      this.captureOriginalOrder();
+    }
+
+    // Handle default sort - restore original order
+    if (this.settings.sortBy === 'default') {
+      const sortedJobs = jobs.sort((a, b) => {
+        const indexA = this.originalOrder.get(a) ?? Infinity;
+        const indexB = this.originalOrder.get(b) ?? Infinity;
+        return indexA - indexB;
+      });
+
+      sortedJobs.forEach(job => {
+        jobList.appendChild(job);
+      });
+
+      console.log('[LinkedIn Job Filter] Restored original order for', sortedJobs.length, 'jobs');
+      return;
+    }
     
     const sortedJobs = jobs.sort((a, b) => {
       const statusA = this.getJobStatus(a);
@@ -133,7 +162,7 @@ class JobFilterExtension {
           if (!statusA.time && !statusB.time) return 0;
           if (!statusA.time) return 1;
           if (!statusB.time) return -1;
-          return statusB.time.getTime() - statusA.time.getTime();
+          return statusA.time.getTime() - statusB.time.getTime();
 
         case 'viewed-first':
           if (statusA.status === 'viewed' && statusB.status !== 'viewed') return -1;
@@ -151,9 +180,17 @@ class JobFilterExtension {
     });
 
     // Reorder by moving elements in the DOM
-    sortedJobs.forEach(job => {
-      jobList.appendChild(job);
-    });
+    if (this.settings.sortBy === 'recent') {
+      // For recent sort: reverse so newest (first in array) is appended last and appears at top
+      sortedJobs.reverse().forEach(job => {
+        jobList.appendChild(job);
+      });
+    } else {
+      // For other sorts: append in order
+      sortedJobs.forEach(job => {
+        jobList.appendChild(job);
+      });
+    }
 
     console.log('[LinkedIn Job Filter] Sorted', sortedJobs.length, 'jobs by', this.settings.sortBy);
   }
@@ -192,7 +229,12 @@ class JobFilterExtension {
       });
 
       if (shouldProcess) {
-        setTimeout(() => this.processJobs(), 100);
+        setTimeout(() => {
+          this.processJobs();
+          if (this.settings.sortBy !== 'default') {
+            this.sortJobs();
+          }
+        }, 100);
       }
     });
 
