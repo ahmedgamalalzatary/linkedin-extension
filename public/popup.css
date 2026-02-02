@@ -197,6 +197,13 @@ select:focus {
   box-shadow: 0 0 0 1px var(--ring);
 }
 
+/* Fix select dropdown options visibility */
+select option {
+  background: var(--background);
+  color: var(--foreground);
+  padding: 8px;
+}
+
 /* Radio Group */
 .radio-group {
   display: flex;
